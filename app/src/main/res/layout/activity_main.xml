@@ -176,15 +176,16 @@
         android:id="@+id/resetGameBtn"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:backgroundTint="#9A7DD8"
         android:text="Reset Game"
         android:textColor="#FFFFFF"
-        android:backgroundTint="#9A7DD8"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/btn6"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn6"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
