@@ -4,13 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MisereMode extends AppCompatActivity implements View.OnClickListener{
 
     private TextView playerOneScore, playerTwoScore, playerStatus;
     private Button[] buttons = new Button[9];
@@ -18,19 +17,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private int playerOneScoreCount, playerTwoScoreCount, roundCount;
     boolean activePlayer;
-    // p1 : 0, p2 : 1, empty: 2
-    int[] gameState = {2,2,2,2,2,2,2,2,2};
-    int[][] winningStates =
+    // p1 : 1, p2 : 1, empty: 0
+    int[] gameState = {0,0,0,0,0,0,0,0,0};
+    int[][] losingStates =
             {
                     {0,1,2},{3,4,5},{6,7,8}, // rows
                     {1,3,6},{1,4,7},{2,5,8}, // columns
                     {0,4,8},{2,4,6} // cross
             };
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_misere_mode);
 
         // Textviews for information at top of game
         playerOneScore = (TextView) findViewById(R.id.playerOneScore);
@@ -64,16 +64,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(activePlayer){
             ((Button)view).setText("X");
             ((Button)view).setTextColor(Color.parseColor("#F6FFB8"));
-            gameState[gameStatePointer] = 0;
+            gameState[gameStatePointer] = 1;
         }else{
-            ((Button)view).setText("O");
+            ((Button)view).setText("X");
             ((Button)view).setTextColor(Color.parseColor("#C3FBFF"));
             gameState[gameStatePointer] = 1;
         }
         roundCount++;
 
         if(checkWin()){
-            if(activePlayer){
+            if(!activePlayer){
                 playerOneScoreCount++;
                 updatePlayerScore();
                 Toast.makeText(this, "Player One has won!",Toast.LENGTH_SHORT).show();
@@ -114,8 +114,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean checkWin(){
         boolean winResult = false;
 
-        for(int[] winState : winningStates){
-            if(gameState[winState[0]] == gameState[winState[1]] && gameState[winState[1]]== gameState[winState[2]] && gameState[winState[0]] != 2){
+        for(int[] winState : losingStates){
+            if(gameState[winState[0]] == gameState[winState[1]] &&
+                    gameState[winState[1]]== gameState[winState[2]] &&
+                    gameState[winState[0]] != 0){
                 winResult =true;
             }
         }
