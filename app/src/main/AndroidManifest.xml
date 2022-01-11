@@ -10,20 +10,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:label="@string/tic_tac_toe"
+            />
+
+        <activity
+            android:name=".MisereMode"
+            android:exported="false"
+            android:label="@string/miser_mode"
+            />
+        <activity
             android:name=".MainMenu"
-            android:exported="true" />
+            android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        <activity
-            android:name=".MisereMode"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
-
         </activity>
 
         <meta-data

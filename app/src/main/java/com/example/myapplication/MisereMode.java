@@ -1,9 +1,12 @@
 package com.example.myapplication;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -32,6 +35,10 @@ public class MisereMode extends AppCompatActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_misere_mode);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+
         // Textviews for information at top of game
         playerOneScore = (TextView) findViewById(R.id.playerOneScore);
         playerTwoScore = (TextView) findViewById(R.id.playerTwoScore);
@@ -39,6 +46,8 @@ public class MisereMode extends AppCompatActivity implements View.OnClickListene
 
         // Reset
         resetGame = (Button) findViewById(R.id.resetGameBtn);
+
+
 
         // Tictactoe buttons
         for(int i =0;i<buttons.length;i++){
@@ -49,7 +58,11 @@ public class MisereMode extends AppCompatActivity implements View.OnClickListene
         }
 
     }
-
+    public boolean onOptionsItemSelected(MenuItem item){
+        Intent myIntent = new Intent(getApplicationContext(), MainMenu.class);
+        startActivityForResult(myIntent, 0);
+        return true;
+    }
     @Override
     public void onClick(View view) {
         //Log.i("test","button is clicked");
@@ -135,7 +148,7 @@ public class MisereMode extends AppCompatActivity implements View.OnClickListene
         activePlayer = true;
 
         for(int i =0; i< buttons.length;i++){
-            gameState[i] = 2;
+            gameState[i] = 0;
             buttons[i].setText("");
         }
     }
