@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -42,7 +43,7 @@ public class MisereMode extends AppCompatActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_misere_mode);
-        builder = new AlertDialog.Builder(this);
+        builder = new AlertDialog.Builder(MisereMode.this);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -74,8 +75,11 @@ public class MisereMode extends AppCompatActivity implements View.OnClickListene
         startActivityForResult(myIntent, 0);
         return true;
     }
+
     @Override
     public void onClick(View view) {
+
+
         //Log.i("test","button is clicked");
         if(!((Button) view).getText().toString().equals("")){
             return;
@@ -84,6 +88,21 @@ public class MisereMode extends AppCompatActivity implements View.OnClickListene
         String buttonID = view.getResources().getResourceEntryName(view.getId());
         // storing the last character of button name
         int gameStatePointer = Integer.parseInt(buttonID.substring(buttonID.length()-1, buttonID.length()));
+
+
+        instructBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("CREATED", "How to play alertDialog triggered");
+                builder.setMessage("You lose by completing a 3 in a row.");
+                AlertDialog alert = builder.create();
+                //Setting the title manually
+                alert.setTitle("Miser Mode Rules");
+                alert.show();
+            }
+
+        });
+
 
         if(activePlayer){
             ((Button)view).setText("X");
@@ -123,24 +142,8 @@ public class MisereMode extends AppCompatActivity implements View.OnClickListene
         }else{
             playerStatus.setText("");
         }
-        try {
-            instructBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    builder.setMessage("Misere Mode:\nYou lose by finishing a 3 in a row.")
-                            .setCancelable(false)
-                            .setPositiveButton("OK", DialogInterface.OnClickListener);
-                    AlertDialog alert = builder.create();
-                    //Setting the title manually
-                    alert.setTitle("Miser Mode Rules");
-                    alert.show();
-                }
+        Log.d("TEST", "test log");
 
-            });
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
 
         resetGame.setOnClickListener(new View.OnClickListener() {
             @Override
