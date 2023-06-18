@@ -97,7 +97,7 @@ public class MisereMode extends AppCompatActivity implements View.OnClickListene
                 builder.setMessage("You lose by completing a 3 in a row.");
                 AlertDialog alert = builder.create();
                 //Setting the title manually
-                alert.setTitle("Miser Mode Rules");
+                alert.setTitle("Misere Mode Rules");
                 alert.show();
             }
 
