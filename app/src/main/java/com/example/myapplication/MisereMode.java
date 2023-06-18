@@ -1,22 +1,31 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+
 public class MisereMode extends AppCompatActivity implements View.OnClickListener{
 
     private TextView playerOneScore, playerTwoScore, playerStatus;
     private Button[] buttons = new Button[9];
     private Button resetGame;
+    private Button instructBtn;
+    AlertDialog.Builder builder;
+
 
     private int playerOneScoreCount, playerTwoScoreCount, roundCount;
     boolean activePlayer;
@@ -34,6 +43,7 @@ public class MisereMode extends AppCompatActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_misere_mode);
+        builder = new AlertDialog.Builder(MisereMode.this);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -46,6 +56,8 @@ public class MisereMode extends AppCompatActivity implements View.OnClickListene
 
         // Reset
         resetGame = (Button) findViewById(R.id.resetGameBtn);
+        // Instructions
+        instructBtn = (Button) findViewById(R.id.misereHowToPlayBtn);
 
 
 
@@ -63,8 +75,11 @@ public class MisereMode extends AppCompatActivity implements View.OnClickListene
         startActivityForResult(myIntent, 0);
         return true;
     }
+
     @Override
     public void onClick(View view) {
+
+
         //Log.i("test","button is clicked");
         if(!((Button) view).getText().toString().equals("")){
             return;
@@ -73,6 +88,21 @@ public class MisereMode extends AppCompatActivity implements View.OnClickListene
         String buttonID = view.getResources().getResourceEntryName(view.getId());
         // storing the last character of button name
         int gameStatePointer = Integer.parseInt(buttonID.substring(buttonID.length()-1, buttonID.length()));
+
+
+        instructBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("CREATED", "How to play alertDialog triggered");
+                builder.setMessage("You lose by completing a 3 in a row.");
+                AlertDialog alert = builder.create();
+                //Setting the title manually
+                alert.setTitle("Miser Mode Rules");
+                alert.show();
+            }
+
+        });
+
 
         if(activePlayer){
             ((Button)view).setText("X");
@@ -112,6 +142,8 @@ public class MisereMode extends AppCompatActivity implements View.OnClickListene
         }else{
             playerStatus.setText("");
         }
+        Log.d("TEST", "test log");
+
 
         resetGame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,6 +155,8 @@ public class MisereMode extends AppCompatActivity implements View.OnClickListene
                 updatePlayerScore();
             }
         });
+
+
     }
     public boolean checkWin(){
         boolean winResult = false;
